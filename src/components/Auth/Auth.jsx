@@ -6,8 +6,12 @@ function Auth() {
   // =========== Appearance ===============================================================
   return (
     <div className='auth'>
-      <Link className='auth__signup'>Регистрация</Link>
-      <Link className='auth__signin'>Войти</Link>
+      <Link to='/signup' className='auth__signup hover-link'>
+        Регистрация
+      </Link>
+      <Link to='/signin' className='auth__signin hover-link'>
+        Войти
+      </Link>
     </div>
   );
 }

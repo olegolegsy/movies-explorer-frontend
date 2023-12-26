@@ -19,7 +19,7 @@ function AboutMe() {
           фриланс-заказами и ушёл с постоянной работы.
         </p>
         <Link
-          className='about-me__link'
+          className='about-me__link hover-link '
           target='_blank'
           to='https://github.com/olegolegsy'
         >

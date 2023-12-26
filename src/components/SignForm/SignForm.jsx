@@ -1,15 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import './SignForm.css';
 import useForm from '../hooks/useForm';
+import useFocus from '../hooks/useFocus';
 import SignInput from '../SignInput/SignInput';
 
 // собираем тут объект с данными юзера и отправляем на сервер и в Контекст
+// обработка api и state с serverError
 
 function SignForm({ type }) {
   // =========== Data =====================================================================
   const firstInput = useRef(null);
   const buttonName = type === 'signup' ? 'Зарегистрироваться' : 'Войти';
   // =========== Logic ====================================================================
+
   const {
     handleChange,
     resetForm,
@@ -19,7 +22,7 @@ function SignForm({ type }) {
     isValid,
     isInputValid,
   } = useForm();
-  //type === 'signup'
+
   useEffect(() => {
     firstInput.current.focus();
   }, []);
@@ -31,7 +34,7 @@ function SignForm({ type }) {
           <SignInput
             label='Имя'
             type='text'
-            name='name'
+            name='nameSignIn'
             value={value}
             onChange={handleChange}
             error={error}
@@ -39,26 +42,29 @@ function SignForm({ type }) {
             minlength={2}
             maxlength={30}
             focus={firstInput}
+            key={'signup-name'}
           />
           <SignInput
             label='E-mail'
             type='email'
-            name='email'
+            name='emailSignIn'
             value={value}
             onChange={handleChange}
             error={error}
             isInputValid={isInputValid}
+            key={'signup-email'}
           />
           <SignInput
             label='Пароль'
             type='password'
-            name='password'
+            name='passwordSignIn'
             value={value}
             onChange={handleChange}
             error={error}
             isInputValid={isInputValid}
             minlength={3}
             maxlength={20}
+            key={'signup-password'}
           />
         </fieldset>
       ) : (
@@ -66,31 +72,39 @@ function SignForm({ type }) {
           <SignInput
             label='E-mail'
             type='email'
-            name='email'
+            name='emailSignUp'
             value={value}
             onChange={handleChange}
             error={error}
             isInputValid={isInputValid}
             focus={firstInput}
+            key={'signin-email'}
           />
           <SignInput
             label='Пароль'
             type='password'
-            name='password'
+            name='passwordSignUp'
             value={value}
             onChange={handleChange}
             error={error}
             isInputValid={isInputValid}
             minlength={3}
             maxlength={20}
+            key={'signin-password'}
           />
         </fieldset>
       )}
-      <input
-        type='submit'
-        className='sign-form__submit-btn'
-        value={buttonName}
-      ></input>
+      <fieldset className='sign-form__fieldset'>
+        <span className='sign-form__server-error'></span>
+        <input
+          disabled={isValid ? 'false' : 'true'}
+          type='submit'
+          className={`sign-form__submit-btn hover-btn ${
+            isValid ? '' : 'sign-form__submit-btn_dis '
+          }`}
+          value={buttonName}
+        ></input>
+      </fieldset>
     </form>
   );
 }

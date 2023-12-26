@@ -9,10 +9,23 @@
   border: none;
   padding: 0;
   margin: 0;
+  width: 260px;
+}
+.sign-form__server-error {
+  display: block;
+  min-height: 13px;
   width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #ff004c;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .sign-form__submit-btn {
-  margin: 0;
+  margin: 20px 0 0;
   padding: 15px 0;
   width: 100%;
   border: none;
@@ -23,8 +36,14 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
 
   background: var(--blue-color);
+}
+
+.sign-form__submit-btn_dis {
+  color: #c2c2c2;
+  background: #f8f8f8;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {
@@ -34,6 +53,10 @@
   .sign-form__submit-btn {
     font-size: 14px;
   }
+
+  .sign-form__fieldset {
+    width: 396px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -42,5 +65,8 @@
   }
   .sign-form {
     min-height: 386px;
+  }
+  .sign-form__fieldset {
+    width: 396px;
   }
 }

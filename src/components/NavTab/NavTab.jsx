@@ -8,7 +8,9 @@ function NavTab() {
     <nav className='nav-tab'>
       <NavLink
         className={({ isActive }) =>
-          isActive ? 'nav-tab__link_active' : 'nav-tab__link'
+          isActive
+            ? 'nav-tab__link_active hover-link '
+            : 'nav-tab__link hover-link '
         }
         to='/movies'
       >
@@ -16,7 +18,9 @@ function NavTab() {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive ? 'nav-tab__link_active' : 'nav-tab__link'
+          isActive
+            ? 'nav-tab__link_active hover-link '
+            : 'nav-tab__link hover-link '
         }
         to='/saved-movies'
       >

@@ -15,8 +15,7 @@
   width: 100%;
   font-family: inherit;
   color: var(--font-white-color);
-  border: none;
-  border-bottom: 1px solid #424242;
+
   background: transparent;
   color: var(--font-white-color);
   font-size: 14px;
@@ -24,6 +23,8 @@
   font-weight: 500;
   line-height: normal;
 
+  border: none;
+  border-bottom: 1px solid #424242;
   outline: none;
 }
 
@@ -46,4 +47,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
 }

@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import SignPage from '../SignPage/SignPage';
 import SignForm from '../SignForm/SignForm';
+import ProfilePage from '../ProfilePage/ProfilePage';
 
 function App() {
   // =========== Data =====================================================================
@@ -74,6 +75,20 @@ function App() {
               </Header>
               <Main />
               <Footer />
+            </>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <>
+              <Header isLoggedIn={isLoggedIn} isMobile={isMobile}>
+                <BurgerButton
+                  isPopupOpen={isPopupOpen}
+                  handlePopupOpen={handlePopupOpen}
+                />
+              </Header>
+              <ProfilePage />
             </>
           }
         />

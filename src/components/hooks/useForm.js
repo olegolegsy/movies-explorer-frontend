@@ -4,8 +4,8 @@ const useForm = () => {
   // =========== Data =====================================================================
   const [value, setValue] = useState({});
   const [error, setError] = useState({});
-  const [isValid, setIsValid] = useState(false);
   const [isInputValid, setIsInputValid] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
   // =========== Logic ====================================================================
   const handleChange = (evt) => {
@@ -37,7 +37,6 @@ const useForm = () => {
     setValue((prevValue) => {
       return { ...prevValue, [name]: value };
     });
-    console.log(value);
   }, []);
 
   // =========== Appearance ===============================================================
