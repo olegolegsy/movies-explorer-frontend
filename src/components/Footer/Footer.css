@@ -1,0 +1,101 @@
+.footer {
+  margin: 0;
+  padding: 60px 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.footer__text {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 21px;
+  color: var(--footer-font-color);
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-bottom: 1px solid #424242;
+}
+.footer__container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.footer__links {
+  margin: 26px 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 9px;
+}
+.footer__copyrights {
+  margin: 0;
+  padding: 0;
+  color: var(--footer-font-color);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .footer {
+    padding: 80px 30px 20px;
+  }
+  .footer__text {
+    padding: 0 0 20px;
+    font-size: 13px;
+  }
+  .footer__container {
+    margin: 0 0 0;
+    height: 36px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .footer__links {
+    margin: 20px 0;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .footer__copyrights {
+    color: var(--font-white-color);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .footer {
+    padding: 50px 70px 20px;
+  }
+  .footer__text {
+    padding: 0 0 20px;
+    font-size: 13px;
+  }
+  .footer__container {
+    margin: 20px 0 0;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  .footer__links {
+    margin: 0;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .footer__copyrights {
+    color: var(--font-white-color);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 13px;
+  }
+}

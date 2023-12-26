@@ -1,0 +1,72 @@
+.main-section {
+  padding: 70px 18px 60px;
+  background: var(--main-bg-color);
+  box-sizing: border-box;
+}
+
+.main-section_student {
+  padding: 70px 14px;
+}
+.main-section_tech {
+  padding: 70px 18px;
+}
+
+.main-section__title {
+  padding: 0 0 28px;
+  margin: 0 0 60px;
+  color: var(--font-white-color);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  border-bottom: 1px solid var(--border-gray-color);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .main-section {
+    padding: 90px 50px;
+  }
+  .main-section__title {
+    margin: 0 0 70px;
+    padding: 0 0 23px;
+    font-size: 22px;
+    letter-spacing: -0.88px;
+  }
+
+  .main-section__title_student {
+    margin: 0 0 69px;
+  }
+
+  .main-section_tech {
+    background: #272727;
+  }
+
+  .main-section__title_tech {
+    margin: 0 0 80px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .main-section {
+    padding: 110px 70px;
+  }
+  .main-section__title {
+    margin: 0 0 70px;
+    padding: 0 0 23px;
+    font-size: 22px;
+    letter-spacing: -0.88px;
+  }
+
+  .main-section_tech {
+    background: #272727;
+    padding: 97px 70px;
+  }
+
+  .main-section__title_tech {
+    margin: 0 0 90px;
+  }
+  .main-section_student {
+    padding: 110px 70px 100px;
+  }
+}

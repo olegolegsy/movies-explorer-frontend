@@ -1,0 +1,46 @@
+.sign-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  min-height: 473px;
+}
+.sign-form__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.sign-form__submit-btn {
+  margin: 0;
+  padding: 15px 0;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  color: var(--font-white-color);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  background: var(--blue-color);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .sign-form {
+    min-height: 386px;
+  }
+  .sign-form__submit-btn {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .sign-form__submit-btn {
+    font-size: 14px;
+  }
+  .sign-form {
+    min-height: 386px;
+  }
+}

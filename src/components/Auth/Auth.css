@@ -1,0 +1,44 @@
+.auth {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+}
+.auth__signup {
+  margin: 0;
+  padding: 0;
+  color: var(--font-white-color);
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 160% */
+  text-decoration: none;
+}
+.auth__signin {
+  margin: 0;
+  padding: 5px 12px;
+  border-radius: 3px;
+  color: var(--black-color);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 160% */
+  background: var(--green-color);
+  text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  .auth {
+    gap: 30px;
+  }
+  .auth__signin {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+  .auth__signup {
+    font-size: 12px;
+  }
+}

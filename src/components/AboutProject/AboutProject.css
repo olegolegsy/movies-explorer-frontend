@@ -1,0 +1,134 @@
+/* .about-project {
+} */
+.about-project__container {
+  display: flex;
+  flex-direction: column;
+}
+.about-project__container-text {
+  margin: 0 0 58px;
+}
+.about-project__title {
+  margin: 0 0 16px;
+  padding: 0;
+  color: var(--font-white-color);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.72px;
+}
+.about-project__text {
+  margin: 0;
+  padding: 0;
+  color: var(--font-white-color);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 145.455% */
+}
+.about-project__bar {
+  display: flex;
+}
+.about-project__bar-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  flex-basis: 80px;
+}
+
+.about-project__bar-item_back {
+  color: var(--black-color);
+  background: var(--green-color);
+
+  flex-grow: 1;
+}
+.about-project__bar-item_front {
+  color: var(--font-white-color);
+  background: var(--bright-bg-color);
+
+  flex-grow: 5;
+}
+
+.about-project__bar-item_down {
+  color: var(--title-gray-color);
+  background: var(--main-bg-color);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .about-project__container {
+    flex-direction: row;
+    gap: 30px;
+  }
+  .about-project__container-text {
+    margin: 0 0 93px;
+  }
+  .about-project__title {
+    margin: 0 0 22px;
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__bar-item {
+    box-sizing: border-box;
+    height: 36px;
+    font-size: 14px;
+    flex-basis: 70px;
+  }
+
+  .about-project__bar-item_front {
+    flex-grow: 6;
+  }
+  .about-project__bar-item_down {
+    height: 31px;
+    padding: 16px 0 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .about-project__container {
+    flex-direction: row;
+    gap: 40px;
+  }
+  .about-project__container-text {
+    min-width: 550px;
+    margin: 0 0 110px;
+  }
+  .about-project__title {
+    margin: 0 0 26px;
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+  .about-project__text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .about-project__bar-item {
+    box-sizing: border-box;
+    height: 36px;
+    font-size: 14px;
+    flex-basis: 70px;
+  }
+
+  .about-project__bar-item_back {
+    min-width: 228px;
+  }
+
+  .about-project__bar-item_front {
+    min-width: 912px;
+  }
+  .about-project__bar-item_down {
+    padding: 16px 0 0;
+  }
+}

@@ -1,0 +1,34 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+@import url(./vendor/root.css);
+
+body {
+  background: var(--main-bg-color);
+}
+#root {
+  margin: auto;
+}
+
+:root {
+  --font-white-color: #fff;
+  --main-bg-color: #202020;
+  --bright-bg-color: #303030;
+
+  --promo-bg-color: #073042;
+  --green-color: #3ddc84;
+  --black-color: #000;
+  --blue-color: #4285f4;
+  --red-color: #ee3465;
+  --title-gray-color: #a0a0a0;
+
+  --border-gray-color: #dadada;
+  --border-link-color: #e6e6e6;
+
+  --footer-font-color: #8b8b8b;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+}
+
+@media screen and (min-width: 1280px) {
+}
