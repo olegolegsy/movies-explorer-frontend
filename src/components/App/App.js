@@ -9,13 +9,17 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 import SignPage from '../SignPage/SignPage';
 import SignForm from '../SignForm/SignForm';
 import ProfilePage from '../ProfilePage/ProfilePage';
+import Movies from '../Movies/Movies';
+
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import widthContext from '../contexts/widthContext';
 
 function App() {
   // =========== Data =====================================================================
   const [width, setWidth] = useState(window.innerWidth);
-  const [isMobile, setIsMobile] = useState(width < 1280);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   // =========== Logic ====================================================================
   function handlePopupOpen() {
@@ -26,7 +30,6 @@ function App() {
   useEffect(() => {
     function handleWindowResize() {
       setWidth(window.innerWidth);
-      setIsMobile(width < 1280);
     }
     window.addEventListener('resize', handleWindowResize);
     return () => {
@@ -45,84 +48,89 @@ function App() {
 
   // =========== Appearance ===============================================================
   return (
-    <div className='App'>
-      <Routes>
-        <Route
-          path='/signup'
-          element={
-            <SignPage type='signup'>
-              <SignForm type='signup' />
-            </SignPage>
-          }
-        />
-        <Route
-          path='/signin'
-          element={
-            <SignPage type='signin'>
-              <SignForm type='signin' />
-            </SignPage>
-          }
-        />
-        <Route
-          path='/'
-          element={
-            <>
-              <Header isLoggedIn={isLoggedIn} isMobile={isMobile}>
-                <BurgerButton
-                  isPopupOpen={isPopupOpen}
-                  handlePopupOpen={handlePopupOpen}
-                />
-              </Header>
-              <Main />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path='/profile'
-          element={
-            <>
-              <Header isLoggedIn={isLoggedIn} isMobile={isMobile}>
-                <BurgerButton
-                  isPopupOpen={isPopupOpen}
-                  handlePopupOpen={handlePopupOpen}
-                />
-              </Header>
-              <ProfilePage />
-            </>
-          }
-        />
-        <Route
-          path='/movies'
-          element={
-            <>
-              <Header isLoggedIn={isLoggedIn} isMobile={isMobile}>
-                <BurgerButton
-                  isPopupOpen={isPopupOpen}
-                  handlePopupOpen={handlePopupOpen}
-                />
-              </Header>
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path='/saved-movies'
-          element={
-            <>
-              <Header isLoggedIn={isLoggedIn} isMobile={isMobile}>
-                <BurgerButton
-                  isPopupOpen={isPopupOpen}
-                  handlePopupOpen={handlePopupOpen}
-                />
-              </Header>
-              <Footer />
-            </>
-          }
-        />
-        <Route path='*' element={<ErrorPage />} />
-      </Routes>
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <widthContext.Provider value={width}>
+        <div className='App'>
+          <Routes>
+            <Route
+              path='/signup'
+              element={
+                <SignPage type='signup'>
+                  <SignForm type='signup' />
+                </SignPage>
+              }
+            />
+            <Route
+              path='/signin'
+              element={
+                <SignPage type='signin'>
+                  <SignForm type='signin' />
+                </SignPage>
+              }
+            />
+            <Route
+              path='/'
+              element={
+                <>
+                  <Header isLoggedIn={isLoggedIn}>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                  </Header>
+                  <Main />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path='/profile'
+              element={
+                <>
+                  <Header isLoggedIn={isLoggedIn}>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                  </Header>
+                  <ProfilePage />
+                </>
+              }
+            />
+            <Route
+              path='/movies'
+              element={
+                <>
+                  <Header isLoggedIn={isLoggedIn}>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                  </Header>
+                  <Movies />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path='/saved-movies'
+              element={
+                <>
+                  <Header isLoggedIn={isLoggedIn}>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                  </Header>
+                  <Footer />
+                </>
+              }
+            />
+            <Route path='*' element={<ErrorPage />} />
+          </Routes>
+        </div>
+      </widthContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 
