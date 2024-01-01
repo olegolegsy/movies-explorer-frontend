@@ -12,11 +12,11 @@ function SignPage({ children, type }) {
   const to = type === 'signup' ? '/signin' : '/signup';
 
   return (
-    <section className='sign-page'>
+    <main className='sign-page'>
       <div className='sign-page__container'>
         <div className='sign-page__header'>
           <Logo />
-          <h2 className='sign-page__title'>{title}</h2>
+          <h1 className='sign-page__title'>{title}</h1>
         </div>
         {children}
         <div className='sign-page__container-text'>
@@ -26,7 +26,7 @@ function SignPage({ children, type }) {
           </Link>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
 

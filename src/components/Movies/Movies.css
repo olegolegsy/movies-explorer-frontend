@@ -1,6 +1,7 @@
 .movies {
   padding: 154px 10px 0;
   background: var(--main-bg-color);
+  flex: 1;
 }
 .movies__search {
   border-bottom: 1px solid #424242;

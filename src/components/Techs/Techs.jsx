@@ -6,7 +6,7 @@ import { techArray } from '../../utils/constants';
 function Techs() {
   return (
     <div className='tech'>
-      <h2 className='tech__title'>{techArray.length} технологий</h2>
+      <h3 className='tech__title'>{techArray.length} технологий</h3>
       <p className='tech__subtitle'>
         На курсе веб-разработки мы освоили технологии, которые применили в
         дипломном проекте.

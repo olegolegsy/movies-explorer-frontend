@@ -12,7 +12,7 @@ function ErrorPage() {
 
   // =========== Appearance ===============================================================
   return (
-    <section className='error-page'>
+    <main className='error-page'>
       <div className='error-page__container'>
         <h1 className='error-page__title'>404</h1>
         <h2 className='error-page__subtitle'>Страница не найдена</h2>
@@ -20,7 +20,7 @@ function ErrorPage() {
           Назад
         </span>
       </div>
-    </section>
+    </main>
   );
 }
 

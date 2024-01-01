@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ProfilePage.css';
 import ProfileInput from '../ProfileInput/ProfileInput';
 import useForm from '../hooks/useForm';
@@ -6,6 +7,12 @@ import useForm from '../hooks/useForm';
 function ProfilePage() {
   const [isEdit, setIsEdit] = useState(false);
   const firstInput = useRef(null);
+
+  const navigate = useNavigate();
+
+  function goBack() {
+    navigate('/');
+  }
 
   const {
     handleChange,
@@ -24,7 +31,7 @@ function ProfilePage() {
   }, [isEdit]);
 
   return (
-    <section className='profile-page'>
+    <main className='profile-page'>
       <h1 className='profile-page__title'>Привет,</h1>
       <form className='profile-page__form'>
         <fieldset className='profile-page__fieldset'>
@@ -72,13 +79,16 @@ function ProfilePage() {
             >
               Редактировать
             </span>
-            <span className='profile-page__link-exit hover-link'>
+            <span
+              className='profile-page__link-exit hover-link'
+              onClick={goBack}
+            >
               Выйти из аккаунта
             </span>
           </div>
         )}
       </form>
-    </section>
+    </main>
   );
 }
 

@@ -36,6 +36,9 @@
   width: 100%;
 }
 
+/* .search-form__input:-webkit-autofill {
+  background: #2f2f2f !important;
+} */
 .search-form__submit {
   margin: 0;
   padding: 8px 12px;

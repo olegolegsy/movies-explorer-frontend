@@ -76,7 +76,7 @@ function Movies() {
 
   // =========== Appearance ===============================================================
   return (
-    <section className='movies'>
+    <main className='movies'>
       <div className='movies__search'>
         <SearchForm
           value={value}
@@ -105,7 +105,7 @@ function Movies() {
           </div>
         )}
       </div>
-    </section>
+    </main>
   );
 }
 
