@@ -16,23 +16,32 @@ function FilterCheckbox({ isSort, onChange }) {
         <g id='smalltumb'>
           <rect
             className={`filter-checkbox__svg-rect ${
-              !isSort ? 'filter-checkbox__svg-rect_active' : ''
+              !isSort && 'filter-checkbox__svg-rect_active'
             }`}
             id='tumb__COLOR:tumbler-on'
             width='36'
             height='20'
             rx='10'
-            fill='#2BE080'
+            fill='#343434'
           />
           <circle
             className={`filter-checkbox__svg-circle ${
-              !isSort ? 'filter-checkbox__svg-circle_active' : ''
+              !isSort && 'filter-checkbox__svg-circle_active'
             }`}
             id='tumb__COLOR:tumbler-on-2'
             cx='26'
             cy='10'
             r='8'
-            fill='white'
+            fill='#2BE080'
+          />
+          <circle
+            cx='26'
+            cy='10'
+            r='7.5'
+            stroke='white'
+            className={`filter-checkbox__svg-circle-border ${
+              !isSort && 'filter-checkbox__svg-circle-border_active'
+            }`}
           />
         </g>
       </svg>

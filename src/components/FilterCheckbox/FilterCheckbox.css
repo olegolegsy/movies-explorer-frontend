@@ -28,6 +28,13 @@
   transform: translateX(-15px);
 }
 
+.filter-checkbox__svg-circle-border {
+  transition: all 0.2s linear;
+}
+.filter-checkbox__svg-circle-border_active {
+  transform: translateX(-15px);
+}
+
 .filter-checkbox__label {
   margin: 0 0 0 13px;
   padding: 0;

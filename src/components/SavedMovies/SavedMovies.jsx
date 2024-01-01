@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import './Movies.css';
+import './SavedMovies.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import SearchForm from '../SearchForm/SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -8,7 +8,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import widthContext from '../contexts/widthContext';
 import apiBeatfilm from '../../utils/MoviesApi';
 
-function Movies() {
+function SavedMovies() {
   // =========== Data =====================================================================
   const width = useContext(widthContext);
   const [isShort, setIsShort] = useState(false);
@@ -90,7 +90,7 @@ function Movies() {
         {showMovies()
           .slice(0, shownMovies)
           .map((movie) => (
-            <MoviesCard key={movie.id} card={movie} />
+            <MoviesCard key={movie.id} card={movie} fromSaved={true} />
           ))}
       </MoviesCardList>
       <div
@@ -109,4 +109,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default SavedMovies;

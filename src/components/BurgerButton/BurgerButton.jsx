@@ -7,7 +7,7 @@ function BurgerButton({ isPopupOpen, handlePopupOpen }) {
   // =========== Appearance ===============================================================
   return (
     <img
-      className='burger-btn hover-btn'
+      className={`burger-btn hover-btn ${isPopupOpen && 'burger-btn_active'}`}
       src={isPopupOpen ? close : open}
       alt={`${
         isPopupOpen

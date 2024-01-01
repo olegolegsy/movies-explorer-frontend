@@ -6,18 +6,18 @@ import Auth from '../Auth/Auth';
 import NavTab from '../NavTab/NavTab';
 import widthContext from '../contexts/widthContext';
 
-function Header({ isLoggedIn, children }) {
+function Header({ isLoggedIn, isPopupOpen }) {
   const width = useContext(widthContext);
   const isMobile = width < 1280;
   // =========== Appearance ===============================================================
   return isLoggedIn ? (
     <header className='header'>
       <div className='header__container'>
-        <Logo />
+        {isPopupOpen && width < 768 ? '' : <Logo />}
         {isMobile ? '' : <NavTab />}
       </div>
-      <div className='header__container'>
-        {isMobile ? children : <Account />}
+      <div className='header__container_rigth'>
+        {isMobile ? '' : <Account />}
       </div>
     </header>
   ) : (

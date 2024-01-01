@@ -13,6 +13,8 @@ import Movies from '../Movies/Movies';
 
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import widthContext from '../contexts/widthContext';
+import Navigation from '../Navigation/Navigation';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   // =========== Data =====================================================================
@@ -31,6 +33,7 @@ function App() {
     function handleWindowResize() {
       setWidth(window.innerWidth);
     }
+
     window.addEventListener('resize', handleWindowResize);
     return () => {
       window.removeEventListener('resize', handleWindowResize);
@@ -72,14 +75,14 @@ function App() {
               path='/'
               element={
                 <>
-                  <Header isLoggedIn={isLoggedIn}>
-                    <BurgerButton
-                      isPopupOpen={isPopupOpen}
-                      handlePopupOpen={handlePopupOpen}
-                    />
-                  </Header>
+                  <BurgerButton
+                    isPopupOpen={isPopupOpen}
+                    handlePopupOpen={handlePopupOpen}
+                  />
+                  <Header isLoggedIn={isLoggedIn}></Header>
                   <Main />
                   <Footer />
+                  {isPopupOpen && <Navigation />}
                 </>
               }
             />
@@ -87,13 +90,16 @@ function App() {
               path='/profile'
               element={
                 <>
-                  <Header isLoggedIn={isLoggedIn}>
-                    <BurgerButton
-                      isPopupOpen={isPopupOpen}
-                      handlePopupOpen={handlePopupOpen}
-                    />
-                  </Header>
+                  <BurgerButton
+                    isPopupOpen={isPopupOpen}
+                    handlePopupOpen={handlePopupOpen}
+                  />
+                  <Header
+                    isPopupOpen={isPopupOpen}
+                    isLoggedIn={isLoggedIn}
+                  ></Header>
                   <ProfilePage />
+                  {isPopupOpen && <Navigation />}
                 </>
               }
             />
@@ -101,14 +107,17 @@ function App() {
               path='/movies'
               element={
                 <>
-                  <Header isLoggedIn={isLoggedIn}>
-                    <BurgerButton
-                      isPopupOpen={isPopupOpen}
-                      handlePopupOpen={handlePopupOpen}
-                    />
-                  </Header>
+                  <BurgerButton
+                    isPopupOpen={isPopupOpen}
+                    handlePopupOpen={handlePopupOpen}
+                  />
+                  <Header
+                    isPopupOpen={isPopupOpen}
+                    isLoggedIn={isLoggedIn}
+                  ></Header>
                   <Movies />
                   <Footer />
+                  {isPopupOpen && <Navigation />}
                 </>
               }
             />
@@ -116,13 +125,17 @@ function App() {
               path='/saved-movies'
               element={
                 <>
-                  <Header isLoggedIn={isLoggedIn}>
-                    <BurgerButton
-                      isPopupOpen={isPopupOpen}
-                      handlePopupOpen={handlePopupOpen}
-                    />
-                  </Header>
+                  <BurgerButton
+                    isPopupOpen={isPopupOpen}
+                    handlePopupOpen={handlePopupOpen}
+                  />
+                  <Header
+                    isPopupOpen={isPopupOpen}
+                    isLoggedIn={isLoggedIn}
+                  ></Header>
+                  <SavedMovies />
                   <Footer />
+                  {isPopupOpen && <Navigation />}
                 </>
               }
             />

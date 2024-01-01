@@ -3,11 +3,11 @@ import './SearchForm.css';
 import searchIcon from '../../images/search-icon.svg';
 import widthContext from '../contexts/widthContext';
 
-function SearchForm({ value, onChange }) {
+function SearchForm({ value, onChange, focus, onSubmit }) {
   const width = useContext(widthContext);
   const isMobile = width > 768;
   return (
-    <form className='search-form'>
+    <form className='search-form' onSubmit={onSubmit}>
       {isMobile ? (
         <img
           className='search-form__img'
@@ -25,6 +25,7 @@ function SearchForm({ value, onChange }) {
           name='movie'
           value={value.movie ? value.movie : ''}
           onChange={onChange}
+          ref={focus}
         ></input>
         <input
           className='search-form__submit hover-btn'
