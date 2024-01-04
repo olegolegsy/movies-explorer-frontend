@@ -7,21 +7,27 @@ import useForm from '../hooks/useForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import widthContext from '../contexts/widthContext';
 import apiBeatfilm from '../../utils/MoviesApi';
+import Preloader from '../Preloader/Preloader';
 
-function Movies() {
+function Movies({ handleAdd, handleDel, savedMovies }) {
   // =========== Data =====================================================================
+  const { handleChange, resetForm, value } = useForm();
+
   const width = useContext(widthContext);
-  const [isShort, setIsShort] = useState(false);
-  const [foundMovies, setFoundMovies] = useState([]);
+  const [isShort, setIsShort] = useState(
+    localStorage.isShort ? JSON.parse(localStorage.isShort) : false
+  );
+  const [foundMovies, setFoundMovies] = useState(
+    localStorage.foundMovies ? JSON.parse(localStorage.foundMovies) : []
+  );
   const [shownMovies, setShownMovies] = useState(calcInitialCardNumer());
   const firstInput = useRef(null);
-  const allMovies = useRef(null);
 
   // =========== Logic ====================================================================
-  const { handleChange, value } = useForm();
 
   // считаем какой список рисовать: из корометражек или все
   function showMovies() {
+    localStorage.setItem('isShort', isShort);
     if (!isShort) {
       return foundMovies.slice();
     } else {
@@ -54,24 +60,52 @@ function Movies() {
     setShownMovies((movies) => movies + calcRowCardNumer());
   }
 
+  function setLocalStorageData() {
+    localStorage.setItem('searchRequest', JSON.stringify(value));
+    localStorage.setItem('isShort', isShort);
+  }
+
   function onSubmit(evt) {
     evt.preventDefault();
-    setFoundMovies(
-      allMovies.current
-        .slice()
-        .filter((movie) =>
-          `${movie.nameEN} ${movie.nameRU} ${movie.description}`
-            .toLowerCase()
-            .includes(value.movie.toLowerCase())
-        )
-    );
+    apiBeatfilm
+      .getMoviesBeatfilm()
+      .then((res) =>
+        setFoundMovies(() => {
+          localStorage.setItem(
+            'foundMovies',
+            JSON.stringify(
+              res
+                .slice()
+                .filter((movie) =>
+                  `${movie.nameEN} ${movie.nameRU}`
+                    .toLowerCase()
+                    .includes(value.movie.toLowerCase())
+                )
+            )
+          );
+
+          return res
+            .slice()
+            .filter((movie) =>
+              `${movie.nameEN} ${movie.nameRU}`
+                .toLowerCase()
+                .includes(value.movie.toLowerCase())
+            );
+        })
+      )
+      .catch((err) => {
+        console.error(`ошибка при  запросе фильмов:${err}`);
+      });
+
+    setLocalStorageData();
   }
 
   // загружаем фильмы с апи и делаем фокус на ипуте
   useEffect(() => {
     firstInput.current.focus();
-
-    apiBeatfilm.getMoviesBeatfilm().then((res) => (allMovies.current = res));
+    resetForm(
+      localStorage.searchRequest ? JSON.parse(localStorage.searchRequest) : {}
+    );
   }, []);
 
   // =========== Appearance ===============================================================
@@ -86,11 +120,18 @@ function Movies() {
         />
         <FilterCheckbox isSort={isShort} onChange={setIsShort} />
       </div>
+
       <MoviesCardList>
         {showMovies()
           .slice(0, shownMovies)
           .map((movie) => (
-            <MoviesCard key={movie.id} card={movie} />
+            <MoviesCard
+              key={movie.id}
+              card={movie}
+              handleAdd={handleAdd}
+              handleDel={handleDel}
+              savedMovies={savedMovies}
+            />
           ))}
       </MoviesCardList>
       <div

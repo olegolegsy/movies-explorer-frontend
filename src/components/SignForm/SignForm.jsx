@@ -1,18 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignForm.css';
 import useForm from '../hooks/useForm';
-import useFocus from '../hooks/useFocus';
 import SignInput from '../SignInput/SignInput';
+import { signin, signup } from '../../utils/MainApi';
 
 // собираем тут объект с данными юзера и отправляем на сервер и в Контекст
 // обработка api и state с serverError
 
-function SignForm({ type }) {
+function SignForm({ type, handleIsLoggedIn }) {
   // =========== Data =====================================================================
+  const [textError, setTextError] = useState('');
   const firstInput = useRef(null);
   const buttonName = type === 'signup' ? 'Зарегистрироваться' : 'Войти';
-  // =========== Logic ====================================================================
 
+  // =========== Logic ====================================================================
+  const navigate = useNavigate();
   const {
     handleChange,
     resetForm,
@@ -23,18 +26,74 @@ function SignForm({ type }) {
     isInputValid,
   } = useForm();
 
+  function handleErorr(err) {
+    if (type === 'signup') {
+      setTextError('При регистрации пользователя произошла ошибка.');
+      // if (err === 'Ошибка: 409') {
+      //   setTextError('Пользователь с таким email уже существует.');
+      // } else {
+      //   setTextError('При регистрации пользователя произошла ошибка.');
+      // }
+    } else {
+      setTextError('При входе произошла ошибка.');
+      // if (err === 'Ошибка: 409') {
+      //   setTextError('Пользователь с таким email уже существует.');
+      // } else {
+      //   setTextError('При регистрации пользователя произошла ошибка.');
+      // }
+    }
+  }
+
+  function onSubmit(evt) {
+    evt.preventDefault();
+    if (type === 'signup') {
+      handleSignup(value.nameSignUp, value.emailSignUp, value.passwordSignUp);
+    } else {
+      handleSignin(value.emailSignIn, value.passwordSignIn);
+    }
+  }
+
+  function handleSignin(email, password) {
+    signin(email, password)
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        handleIsLoggedIn(true);
+        //navigate('/movies');
+      })
+      .catch((err) => {
+        setTextError(err);
+        console.error(`${err}`);
+      })
+      .finally(setTextError(''));
+  }
+
+  function handleSignup(username, email, password) {
+    signup(username, email, password)
+      .then((res) => {
+        if (res) {
+          handleIsLoggedIn(false);
+          handleSignin(email, password);
+        }
+      })
+      .catch((err) => {
+        handleErorr(err);
+        console.error(`${err}`);
+      })
+      .finally(setTextError(''));
+  }
+
   useEffect(() => {
     firstInput.current.focus();
   }, []);
   // =========== Appearance ===============================================================
   return (
-    <form className='sign-form' onSubmit={setForm} noValidate=''>
+    <form className='sign-form' noValidate='' onSubmit={onSubmit}>
       {type === 'signup' ? (
         <fieldset className='sign-form__fieldset'>
           <SignInput
             label='Имя'
             type='text'
-            name='nameSignIn'
+            name='nameSignUp'
             value={value}
             onChange={handleChange}
             error={error}
@@ -47,7 +106,7 @@ function SignForm({ type }) {
           <SignInput
             label='E-mail'
             type='email'
-            name='emailSignIn'
+            name='emailSignUp'
             value={value}
             onChange={handleChange}
             error={error}
@@ -57,7 +116,7 @@ function SignForm({ type }) {
           <SignInput
             label='Пароль'
             type='password'
-            name='passwordSignIn'
+            name='passwordSignUp'
             value={value}
             onChange={handleChange}
             error={error}
@@ -72,7 +131,7 @@ function SignForm({ type }) {
           <SignInput
             label='E-mail'
             type='email'
-            name='emailSignUp'
+            name='emailSignIn'
             value={value}
             onChange={handleChange}
             error={error}
@@ -83,7 +142,7 @@ function SignForm({ type }) {
           <SignInput
             label='Пароль'
             type='password'
-            name='passwordSignUp'
+            name='passwordSignIn'
             value={value}
             onChange={handleChange}
             error={error}
@@ -95,9 +154,10 @@ function SignForm({ type }) {
         </fieldset>
       )}
       <fieldset className='sign-form__fieldset'>
-        <span className='sign-form__server-error'></span>
+        {/* ERROR HOLDER HERE */}
+        <span className='sign-form__server-error'>{textError}</span>
         <input
-          disabled={isValid ? 'false' : 'true'}
+          disabled={isValid ? false : true}
           type='submit'
           className={`sign-form__submit-btn hover-btn ${
             isValid ? '' : 'sign-form__submit-btn_dis '
