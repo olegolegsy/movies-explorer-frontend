@@ -61,15 +61,6 @@ function App() {
   }
   // =========== Effects
   useEffect(() => {
-    getSavedMovies()
-      .then((res) => {
-        setSavedMovies(res);
-      })
-      .catch((err) => {
-        console.error(`Ошибка при загрузке SavedMovies: ${err}`);
-      });
-  }, []);
-  useEffect(() => {
     function handleWindowResize() {
       setWidth(window.innerWidth);
     }
@@ -87,6 +78,14 @@ function App() {
           setCurrentUser(res);
         })
         .catch((err) => console.error(err));
+
+      getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .catch((err) => {
+          console.error(`Ошибка при загрузке SavedMovies: ${err}`);
+        });
     }
   }, [isLoggedIn]);
 

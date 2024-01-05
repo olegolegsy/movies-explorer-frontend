@@ -1,0 +1,11 @@
+.no-movies-result {
+  display: flex;
+}
+
+.no-movies-result__title {
+  text-align: center;
+  margin: auto;
+  padding: 0;
+  color: var(--title-gray-color);
+  font-size: 26px;
+}

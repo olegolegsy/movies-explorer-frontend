@@ -8,25 +8,27 @@ function MoviesCard({
   handleAdd,
   handleDel,
   savedMovies,
-  handleFoundMovie,
+  removeDeletedCard,
 }) {
   const [isLiked, setIsLiked] = useState(
     savedMovies.some((el) => el.movieId === card.id)
   );
-  const serverID = useRef(savedMovies.find((el) => el.movieId === card.id));
+  const cardWithDeleteID = useRef(
+    savedMovies.find((el) => el.movieId === card.id)
+  );
 
   function handleLikeBtn() {
     if (isLiked) {
-      handleDel(card.id, serverID.current);
+      handleDel(card.id, cardWithDeleteID.current);
     } else {
-      handleAdd(card, serverID);
+      handleAdd(card, cardWithDeleteID);
     }
     setIsLiked((liked) => !liked);
   }
 
   function handleDelFromSaved() {
     handleDel(card.movieId, card);
-    handleFoundMovie(card.movieId);
+    removeDeletedCard(card.movieId);
   }
 
   function calcDuration(duration) {

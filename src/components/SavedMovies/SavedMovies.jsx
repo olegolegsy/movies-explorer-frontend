@@ -34,7 +34,7 @@ function SavedMovies({ handleDel, savedMovies }) {
     );
   }
 
-  function handleFoundMovie(cardID) {
+  function removeDeletedCard(cardID) {
     setFoundMovies((list) => list.filter((movie) => movie.movieId !== cardID));
   }
 
@@ -68,7 +68,7 @@ function SavedMovies({ handleDel, savedMovies }) {
             handleDel={handleDel}
             savedMovies={savedMovies}
             fromSaved={true}
-            handleFoundMovie={handleFoundMovie}
+            removeDeletedCard={removeDeletedCard}
           />
         ))}
       </MoviesCardList>

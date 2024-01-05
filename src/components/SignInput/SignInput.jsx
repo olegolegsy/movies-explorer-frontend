@@ -24,7 +24,7 @@ function SignInput({
         name={name}
         value={value[name] ? value[name] : ''}
         onChange={onChange}
-        required='true'
+        required={true}
         minLength={minlength}
         maxLength={maxlength}
         ref={focus}

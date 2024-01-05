@@ -29,15 +29,11 @@ function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
     }
   }
 
-  function theSame() {
-    if (
-      currentUser.name === value.profileName &&
+  function verifyUserDataUpdated() {
+    return currentUser.name === value.profileName &&
       currentUser.email === value.profileEmail
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+      ? false
+      : true;
   }
 
   function omSubmit(evt) {
@@ -102,10 +98,12 @@ function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
           <fieldset className='profile-page__fieldset profile-page__fieldset_btn'>
             <span className='profile-page__server-error'>{errorText}</span>
             <input
-              disabled={isValid && theSame() ? false : true}
+              disabled={isValid && verifyUserDataUpdated() ? false : true}
               type='submit'
               className={`profile-page__submit-btn hover-btn ${
-                isValid && theSame() ? '' : 'profile-page__submit-btn_dis '
+                isValid && verifyUserDataUpdated()
+                  ? ''
+                  : 'profile-page__submit-btn_dis '
               }`}
               value={'Сохранить'}
             />
