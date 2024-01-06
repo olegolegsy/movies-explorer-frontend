@@ -35,21 +35,23 @@ function App() {
 
   const navigate = useNavigate();
 
-  function handleDelSavedMovie(cardID, ref) {
+  function handleDelSavedMovie(cardID, ref, callback) {
     delMovie(ref._id)
       .then(() => {
         setSavedMovies(savedMovies.filter((movie) => movie.movieId !== cardID));
+        callback();
       })
       .catch((err) => {
         console.error(`ошибка при удалении лайка ${err}`);
       });
   }
 
-  function handleAddSavedMovie(card, ref) {
+  function handleAddSavedMovie(card, ref, callback) {
     addMovie(card)
       .then((res) => {
         ref.current = res;
         setSavedMovies((value) => [res, ...value]);
+        callback();
       })
       .catch((err) => {
         console.error(`ошибка при установке лайка ${err}`);

@@ -19,26 +19,14 @@ function MoviesCard({
 
   function handleLikeBtn() {
     if (isLiked) {
-      handleDel(card.id, cardWithDeleteID.current)
-        .then(() => setIsLiked((liked) => !liked))
-        .catch((err) => {
-          console.error(`ошибка при удалении лайка ${err}`);
-        });
+      handleDel(card.id, cardWithDeleteID.current, () => setIsLiked(false));
     } else {
-      handleAdd(card, cardWithDeleteID)
-        .then(() => setIsLiked((liked) => !liked))
-        .catch((err) => {
-          console.error(`ошибка при установке лайка ${err}`);
-        });
+      handleAdd(card, cardWithDeleteID, () => setIsLiked(true));
     }
   }
 
   function handleDelFromSaved() {
-    handleDel(card.movieId, card)
-      .then(() => removeDeletedCard(card.movieId))
-      .catch((err) => {
-        console.error(`ошибка при установке лайка ${err}`);
-      });
+    handleDel(card.movieId, card, () => removeDeletedCard(card.movieId));
   }
 
   function calcDuration(duration) {
@@ -56,6 +44,7 @@ function MoviesCard({
       <Link target='_blank' to={card.trailerLink}>
         <img
           className='movie-card__poster'
+          alt={card.nameRU}
           src={
             fromSaved
               ? card.image
