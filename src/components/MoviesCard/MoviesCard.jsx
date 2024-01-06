@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './MoviesCard.css';
 import { Link } from 'react-router-dom';
 
-function MoviesCard({ card, fromSaved }) {
-  const [isLiked, setIsLiked] = useState(false);
+function MoviesCard({
+  card,
+  fromSaved,
+  handleAdd,
+  handleDel,
+  savedMovies,
+  removeDeletedCard,
+}) {
+  const [isLiked, setIsLiked] = useState(
+    savedMovies.some((el) => el.movieId === card.id)
+  );
+  const cardWithDeleteID = useRef(
+    savedMovies.find((el) => el.movieId === card.id)
+  );
+
   function handleLikeBtn() {
-    setIsLiked((liked) => !liked);
+    if (isLiked) {
+      handleDel(card.id, cardWithDeleteID.current, () => setIsLiked(false));
+    } else {
+      handleAdd(card, cardWithDeleteID, () => setIsLiked(true));
+    }
   }
+
+  function handleDelFromSaved() {
+    handleDel(card.movieId, card, () => removeDeletedCard(card.movieId));
+  }
+
   function calcDuration(duration) {
     if (duration < 60) {
       return `${duration}м`;
@@ -22,13 +44,21 @@ function MoviesCard({ card, fromSaved }) {
       <Link target='_blank' to={card.trailerLink}>
         <img
           className='movie-card__poster'
-          src={`https://api.nomoreparties.co${card.image.url}`}
+          alt={card.nameRU}
+          src={
+            fromSaved
+              ? card.image
+              : `https://api.nomoreparties.co${card.image.url}`
+          }
         />
       </Link>
 
       <div className='movie-card__continer'>
         <span className='movie-card__title'>{card.nameRU}</span>
-        <div className='movie-card__like-btn hover-btn' onClick={handleLikeBtn}>
+        <div
+          className='movie-card__like-btn hover-btn'
+          onClick={fromSaved ? handleDelFromSaved : handleLikeBtn}
+        >
           {!fromSaved ? (
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -52,8 +82,8 @@ function MoviesCard({ card, fromSaved }) {
               fill='none'
             >
               <path
-                fill-rule='evenodd'
-                clip-rule='evenodd'
+                fillRule='evenodd'
+                clipRule='evenodd'
                 d='M4 5.06055L6.65156 7.71211L7.71222 6.65145L5.06066 3.99989L7.71211 1.34844L6.65145 0.287781L4 2.93923L1.34826 0.287484L0.287598 1.34814L2.93934 3.99989L0.287484 6.65174L1.34814 7.7124L4 5.06055Z'
                 fill='white'
               />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import BurgerButton from '../BurgerButton/BurgerButton';
@@ -15,19 +15,60 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 import widthContext from '../contexts/widthContext';
 import Navigation from '../Navigation/Navigation';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import {
+  getUser,
+  getSavedMovies,
+  delMovie,
+  addMovie,
+} from '../../utils/MainApi';
 
 function App() {
   // =========== Data =====================================================================
   const [width, setWidth] = useState(window.innerWidth);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.jwt);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [savedMovies, setSavedMovies] = useState([]);
 
   // =========== Logic ====================================================================
+
+  const navigate = useNavigate();
+
+  function handleDelSavedMovie(cardID, ref, callback) {
+    delMovie(ref._id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((movie) => movie.movieId !== cardID));
+        callback();
+      })
+      .catch((err) => {
+        console.error(`ошибка при удалении лайка ${err}`);
+      });
+  }
+
+  function handleAddSavedMovie(card, ref, callback) {
+    addMovie(card)
+      .then((res) => {
+        ref.current = res;
+        setSavedMovies((value) => [res, ...value]);
+        callback();
+      })
+      .catch((err) => {
+        console.error(`ошибка при установке лайка ${err}`);
+      });
+  }
+
   function handlePopupOpen() {
     setIsPopupOpen((value) => !value);
   }
 
+  function handleIsLoggedIn(value) {
+    setIsLoggedIn(value);
+  }
+
+  function handleCurrentUser(value) {
+    setCurrentUser(value);
+  }
   // =========== Effects
   useEffect(() => {
     function handleWindowResize() {
@@ -40,14 +81,32 @@ function App() {
     };
   }, [width]);
 
-  // temp for logg
-  // useEffect(() => {
-  //   window.addEventListener('keydown', (evt) => {
-  //     if (evt.key === 'F8') {
-  //       setIsLoggedIn(!isLoggedIn);
-  //     }
-  //   });
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUser()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch((err) => console.error(err));
+
+      getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .catch((err) => {
+          console.error(`Ошибка при загрузке SavedMovies: ${err}`);
+        });
+    }
+  }, [isLoggedIn]);
+
+  // with dep (чтобы неразлогиниться)
+  useEffect(() => {
+    if (localStorage.jwt) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [navigate]);
 
   // =========== Appearance ===============================================================
   return (
@@ -56,29 +115,16 @@ function App() {
         <div className='App'>
           <Routes>
             <Route
-              path='/signup'
-              element={
-                <SignPage type='signup'>
-                  <SignForm type='signup' />
-                </SignPage>
-              }
-            />
-            <Route
-              path='/signin'
-              element={
-                <SignPage type='signin'>
-                  <SignForm type='signin' />
-                </SignPage>
-              }
-            />
-            <Route
               path='/'
               element={
                 <>
-                  <BurgerButton
-                    isPopupOpen={isPopupOpen}
-                    handlePopupOpen={handlePopupOpen}
-                  />
+                  {isLoggedIn && (
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                  )}
+
                   <Header isLoggedIn={isLoggedIn}></Header>
                   <Main />
                   <Footer />
@@ -89,54 +135,102 @@ function App() {
             <Route
               path='/profile'
               element={
-                <>
-                  <BurgerButton
-                    isPopupOpen={isPopupOpen}
-                    handlePopupOpen={handlePopupOpen}
-                  />
-                  <Header
-                    isPopupOpen={isPopupOpen}
-                    isLoggedIn={isLoggedIn}
-                  ></Header>
-                  <ProfilePage />
-                  {isPopupOpen && <Navigation />}
-                </>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                    <Header
+                      isPopupOpen={isPopupOpen}
+                      isLoggedIn={isLoggedIn}
+                    ></Header>
+                    <ProfilePage
+                      handleCurrentUser={handleCurrentUser}
+                      handleIsLoggedIn={handleIsLoggedIn}
+                    />
+                    {isPopupOpen && <Navigation />}
+                  </>
+                </ProtectedRoute>
               }
             />
             <Route
               path='/movies'
               element={
-                <>
-                  <BurgerButton
-                    isPopupOpen={isPopupOpen}
-                    handlePopupOpen={handlePopupOpen}
-                  />
-                  <Header
-                    isPopupOpen={isPopupOpen}
-                    isLoggedIn={isLoggedIn}
-                  ></Header>
-                  <Movies />
-                  <Footer />
-                  {isPopupOpen && <Navigation />}
-                </>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                    <Header
+                      isPopupOpen={isPopupOpen}
+                      isLoggedIn={isLoggedIn}
+                    ></Header>
+                    <Movies
+                      handleDel={handleDelSavedMovie}
+                      handleAdd={handleAddSavedMovie}
+                      savedMovies={savedMovies}
+                    />
+                    <Footer />
+                    {isPopupOpen && <Navigation />}
+                  </>
+                </ProtectedRoute>
               }
             />
             <Route
               path='/saved-movies'
               element={
-                <>
-                  <BurgerButton
-                    isPopupOpen={isPopupOpen}
-                    handlePopupOpen={handlePopupOpen}
-                  />
-                  <Header
-                    isPopupOpen={isPopupOpen}
-                    isLoggedIn={isLoggedIn}
-                  ></Header>
-                  <SavedMovies />
-                  <Footer />
-                  {isPopupOpen && <Navigation />}
-                </>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <>
+                    <BurgerButton
+                      isPopupOpen={isPopupOpen}
+                      handlePopupOpen={handlePopupOpen}
+                    />
+                    <Header
+                      isPopupOpen={isPopupOpen}
+                      isLoggedIn={isLoggedIn}
+                    ></Header>
+                    <SavedMovies
+                      handleDel={handleDelSavedMovie}
+                      savedMovies={savedMovies}
+                    />
+                    <Footer />
+                    {isPopupOpen && <Navigation />}
+                  </>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/signup'
+              element={
+                isLoggedIn ? (
+                  <Navigate to='/movies' />
+                ) : (
+                  <SignPage type='signup'>
+                    <SignForm
+                      key='signup'
+                      type='signup'
+                      handleIsLoggedIn={handleIsLoggedIn}
+                    />
+                  </SignPage>
+                )
+              }
+            />
+            <Route
+              path='/signin'
+              element={
+                isLoggedIn ? (
+                  <Navigate to='/movies' />
+                ) : (
+                  <SignPage type='signin'>
+                    <SignForm
+                      key='signin'
+                      type='signin'
+                      handleIsLoggedIn={handleIsLoggedIn}
+                    />
+                  </SignPage>
+                )
               }
             />
             <Route path='*' element={<ErrorPage />} />

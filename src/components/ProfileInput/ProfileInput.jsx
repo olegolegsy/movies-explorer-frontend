@@ -8,11 +8,11 @@ function ProfileInput({
   value,
   onChange,
   error,
-  isInputValid,
   minlength,
   maxlength,
   focus,
   isEdit,
+  pattern,
 }) {
   return (
     <>
@@ -21,16 +21,17 @@ function ProfileInput({
         <input
           className={`profile-input__input ${
             error[name] ? 'profile-input__input_error' : ''
-          }`}
+          } ${isEdit ? 'profile-input__input_edit' : ''}`}
           type={type}
           name={name}
           value={value[name] ? value[name] : ''}
           onChange={onChange}
-          required='true'
+          required={true}
           minLength={minlength}
           maxLength={maxlength}
           ref={focus}
-          disabled={`${isEdit ? '' : 'true'}`}
+          pattern={pattern}
+          disabled={isEdit ? false : true}
         ></input>
       </label>
     </>

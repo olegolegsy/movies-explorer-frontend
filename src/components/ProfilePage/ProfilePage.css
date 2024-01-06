@@ -16,6 +16,9 @@
   font-weight: 500;
   line-height: normal;
 }
+.profile-page__title_success {
+  color: green;
+}
 .profile-page__form {
   width: 260px;
 }

@@ -8,10 +8,10 @@ function SignInput({
   value,
   onChange,
   error,
-  isInputValid,
   minlength,
   maxlength,
   focus,
+  pattern,
 }) {
   return (
     <>
@@ -24,9 +24,10 @@ function SignInput({
         name={name}
         value={value[name] ? value[name] : ''}
         onChange={onChange}
-        required='true'
+        required={true}
         minLength={minlength}
         maxLength={maxlength}
+        pattern={pattern}
         ref={focus}
       ></input>
       <span className={`sign-input__error`}>{error[name]}</span>

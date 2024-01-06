@@ -15,7 +15,6 @@
   margin: 0;
   padding: 0 0 16px;
   /* width: 260px; */
-  direction: rtl;
   color: var(--font-white-color);
   text-align: right;
   font-size: 11px;
@@ -27,6 +26,11 @@
 
   outline: none;
   background: transparent;
+  direction: rtl;
+}
+
+.profile-input__input_edit {
+  direction: ltr;
 }
 .profile-input__input_error {
   color: #ee3465;
