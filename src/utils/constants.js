@@ -38,3 +38,5 @@ export const signupErrorsTexts = {
   409: 'Пользователь с таким email уже существует.',
   500: 'При регистрации произошла ошибка.',
 };
+
+export const emailReg = '^\\S+@\\S+\\.\\S+$';

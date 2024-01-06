@@ -36,16 +36,24 @@ function App() {
   const navigate = useNavigate();
 
   function handleDelSavedMovie(cardID, ref) {
-    delMovie(ref._id).then(() => {
-      setSavedMovies(savedMovies.filter((movie) => movie.movieId !== cardID));
-    });
+    delMovie(ref._id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((movie) => movie.movieId !== cardID));
+      })
+      .catch((err) => {
+        console.error(`ошибка при удалении лайка ${err}`);
+      });
   }
 
   function handleAddSavedMovie(card, ref) {
-    addMovie(card).then((res) => {
-      ref.current = res;
-      setSavedMovies((value) => [res, ...value]);
-    });
+    addMovie(card)
+      .then((res) => {
+        ref.current = res;
+        setSavedMovies((value) => [res, ...value]);
+      })
+      .catch((err) => {
+        console.error(`ошибка при установке лайка ${err}`);
+      });
   }
 
   function handlePopupOpen() {

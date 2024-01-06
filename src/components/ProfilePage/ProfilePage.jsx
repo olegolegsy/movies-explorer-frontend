@@ -5,15 +5,25 @@ import ProfileInput from '../ProfileInput/ProfileInput';
 import useForm from '../hooks/useForm';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import { editUser } from '../../utils/MainApi';
+import { emailReg } from '../../utils/constants';
 
 function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
   const [isEdit, setIsEdit] = useState(false);
   const [errorText, setErrorText] = useState('');
+  const [isSuccessfulRequest, setIsSuccessfulRequest] = useState(false);
   const firstInput = useRef(null);
   const currentUser = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const { handleChange, resetForm, value, error, isValid, isInputValid } =
     useForm();
+
+  function handleIsSuccessfulRequest() {
+    setTimeout(() => {
+      setIsSuccessfulRequest(false);
+    }, 2000);
+
+    return 'Профиль успешно обновлен!';
+  }
 
   function goBack() {
     handleIsLoggedIn(false);
@@ -45,9 +55,11 @@ function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
           email: value.profileEmail,
         });
         setIsEdit(false);
+        setIsSuccessfulRequest(true);
       })
       .catch((err) => {
         handleError(err);
+        setIsSuccessfulRequest(false);
       })
       .finally(setErrorText(''));
   }
@@ -67,8 +79,16 @@ function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
 
   return (
     <main className='profile-page'>
-      <h1 className='profile-page__title'>Привет, {currentUser.name}</h1>
-      <form className='profile-page__form' onSubmit={omSubmit}>
+      <h1
+        className={`profile-page__title ${
+          isSuccessfulRequest ? 'profile-page__title_success' : ''
+        }`}
+      >
+        {isSuccessfulRequest
+          ? handleIsSuccessfulRequest()
+          : `Привет, ${currentUser.name}`}
+      </h1>
+      <form className='profile-page__form' noValidate='' onSubmit={omSubmit}>
         <fieldset className='profile-page__fieldset'>
           <ProfileInput
             label={'Имя'}
@@ -92,6 +112,7 @@ function ProfilePage({ handleCurrentUser, handleIsLoggedIn }) {
             error={error}
             isInputValid={isInputValid}
             isEdit={isEdit}
+            pattern={emailReg}
           />
         </fieldset>
         {isEdit ? (

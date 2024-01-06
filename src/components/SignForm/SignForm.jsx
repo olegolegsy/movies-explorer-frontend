@@ -4,6 +4,7 @@ import './SignForm.css';
 import useForm from '../hooks/useForm';
 import SignInput from '../SignInput/SignInput';
 import { signin, signup } from '../../utils/MainApi';
+import { emailReg } from '../../utils/constants';
 
 // собираем тут объект с данными юзера и отправляем на сервер и в Контекст
 // обработка api и state с serverError
@@ -15,18 +16,10 @@ function SignForm({ type, handleIsLoggedIn }) {
   const buttonName = type === 'signup' ? 'Зарегистрироваться' : 'Войти';
 
   // =========== Logic ====================================================================
-  const navigate = useNavigate();
-  const {
-    handleChange,
-    resetForm,
-    setForm,
-    value,
-    error,
-    isValid,
-    isInputValid,
-  } = useForm();
 
-  function handleErorr(err) {
+  const { handleChange, value, error, isValid, isInputValid } = useForm();
+
+  function handleErorr() {
     if (type === 'signup') {
       setTextError('При регистрации пользователя произошла ошибка.');
       // if (err === 'Ошибка: 409') {
@@ -58,7 +51,6 @@ function SignForm({ type, handleIsLoggedIn }) {
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         handleIsLoggedIn(true);
-        //navigate('/movies');
       })
       .catch((err) => {
         setTextError(err);
@@ -112,6 +104,7 @@ function SignForm({ type, handleIsLoggedIn }) {
             error={error}
             isInputValid={isInputValid}
             key={'signup-email'}
+            pattern={emailReg}
           />
           <SignInput
             label='Пароль'
@@ -138,6 +131,7 @@ function SignForm({ type, handleIsLoggedIn }) {
             isInputValid={isInputValid}
             focus={firstInput}
             key={'signin-email'}
+            pattern={emailReg}
           />
           <SignInput
             label='Пароль'

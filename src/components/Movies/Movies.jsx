@@ -120,7 +120,7 @@ function Movies({ handleAdd, handleDel, savedMovies }) {
       </div>
       {isLoading ? (
         <Preloader />
-      ) : foundMovies.length === 0 ? (
+      ) : showMovies().length === 0 ? (
         <NoMoviesResult isError={isError} />
       ) : (
         <>

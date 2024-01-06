@@ -19,16 +19,26 @@ function MoviesCard({
 
   function handleLikeBtn() {
     if (isLiked) {
-      handleDel(card.id, cardWithDeleteID.current);
+      handleDel(card.id, cardWithDeleteID.current)
+        .then(() => setIsLiked((liked) => !liked))
+        .catch((err) => {
+          console.error(`ошибка при удалении лайка ${err}`);
+        });
     } else {
-      handleAdd(card, cardWithDeleteID);
+      handleAdd(card, cardWithDeleteID)
+        .then(() => setIsLiked((liked) => !liked))
+        .catch((err) => {
+          console.error(`ошибка при установке лайка ${err}`);
+        });
     }
-    setIsLiked((liked) => !liked);
   }
 
   function handleDelFromSaved() {
-    handleDel(card.movieId, card);
-    removeDeletedCard(card.movieId);
+    handleDel(card.movieId, card)
+      .then(() => removeDeletedCard(card.movieId))
+      .catch((err) => {
+        console.error(`ошибка при установке лайка ${err}`);
+      });
   }
 
   function calcDuration(duration) {
